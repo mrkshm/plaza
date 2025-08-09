@@ -1,0 +1,10 @@
+<%# locals: () -%>
+
+<div class="" data-turbo-temporary>
+  <% flash.each do | level, message | %>
+    <%= tag.div \
+      class: "alert alert-#{ daisy_alert_level(level) } mt-4" do %>
+      <%= message %>
+    <% end %>
+  <% end %>
+</div>

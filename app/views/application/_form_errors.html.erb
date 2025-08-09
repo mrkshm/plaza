@@ -1,0 +1,13 @@
+<%# locals: (html_tag:, instance:) -%>
+
+<% if html_tag.match?(/<label/) %>
+  <%= html_tag.html_safe %>
+<% else %>
+  <% 
+    html_doc = Nokogiri::HTML::DocumentFragment.parse(html_tag)
+    html_doc.children.add_class("input-error")
+    error_message = instance.error_message.to_sentence
+  %>
+  <%= html_doc.to_html.html_safe %>
+  <p class="text-error text-xs italic mt-1"><%= error_message %></p>
+<% end %>
