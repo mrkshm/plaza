@@ -3,6 +3,6 @@
 set -o errexit
 
 bundle install
-bundle exec rake assets:precompile
+RAILS_SERVE_STATIC_FILES=true bundle exec rake assets:precompile
 bundle exec rake assets:clean
 bundle exec rake db:migrate
