@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_authentication only: [:new, :create]
   def new
     @user = User.new
   end
@@ -8,8 +9,9 @@ class UsersController < ApplicationController
 
     if @user.save
       @organization = Organization.create(members: [ @user ])
-      # TODO LOg in user
-      #
+      @app_session = @user.app_sessions.create
+      log_in(@app_session)
+
       redirect_to root_path, status: :see_other, flash: { success: t("users.create.welcome", name: @user.name) }
     else
       render :new, status: :unprocessable_content

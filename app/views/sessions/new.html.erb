@@ -1,0 +1,26 @@
+<% content_for :title, t(".title") %>
+
+<layout-columns class="card-lg min-w-[400px] self-center">
+  <layout-column class="flex flex-col gap-4">
+    <h1 class="text-3xl"><%= t(".title") %></h1>
+    <%= form_with(
+          url: login_path,
+          scope: :user,
+          class: "flex flex-col gap-4"
+        ) do |form| %>
+      <div class="flex flex-col">
+        <%= form.label :email, class: "label" %>
+        <%= form.text_field :email, class: "input" %>
+      </div>
+      <div class="flex flex-col">
+        <%= form.label :password, class: "label" %>
+        <%= form.text_field :password, class: "input" %>
+      </div>
+
+      <div>
+        <%= form.submit t(".login"), class: "btn btn-primary my-3" %>
+      </div>
+
+    <% end %>
+  </layout-column>
+</layout-columns>
