@@ -1,0 +1,53 @@
+<div class="navbar bg-base-100 shadow-sm relative" data-controller="navbar">
+  <div class="navbar-start flex-1">
+    <a href="<%= root_path %>" class="btn btn-ghost text-xl">Plaza</a>
+  </div>
+
+  <div class="navbar-center hidden md:flex">
+    <%= link_to t(".create_ad"), "#", class: "navbar-item" %>
+    <%= link_to t(".messages"), "#", class: "navbar-item" %>
+  </div>
+
+  <div class="navbar-end">
+    <% unless logged_in? %>
+      <div class="hidden md:flex">
+        <div class="buttons space-x-4">
+          <%= link_to t(".sign_up"),
+                      sign_up_path,
+                      class: "btn btn-primary" %>
+          <%= link_to t(".login"),
+                      login_path,
+                      class: "btn btn-outline" %>
+        </div>
+      </div>
+    <% end %>
+
+    <button class="btn btn-square btn-ghost md:hidden" data-action="click->navbar#toggle" data-navbar-target="toggleButton" aria-expanded="false" aria-controls="mobile-menu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <%# Mobile Menu -%>
+  <div class="md:hidden hidden absolute right-2 top-full mt-2 z-50"
+       data-navbar-target="mobileMenu"
+       id="mobile-menu">
+    <% if logged_in? %>
+      <ul class="menu bg-base-200 rounded-box w-56 shadow">
+        <li class="menu-title"><%= Current.user.name %></li>
+        <li><%= link_to t(".profile"), "#", class: "menu-item" %></li>
+        <li><%= link_to t(".my_ads"), "#", class: "menu-item" %></li>
+        <li><%= link_to t(".saved_ads"), "#", class: "menu-item" %></li>
+        <li><hr /></li>
+        <li><%= link_to t(".logout"), logout_path, class: "menu-item", data: { turbo_method: :delete } %></li>
+      </ul>
+    <% else %>
+      <ul class="menu bg-base-200 rounded-box w-56 shadow">
+        <li><%= link_to t(".sign_up"), sign_up_path, class: "menu-item" %></li>
+        <li><%= link_to t(".login"), login_path, class: "menu-item" %></li>
+      </ul>
+    <% end %>
+  </div>
+</div>
+

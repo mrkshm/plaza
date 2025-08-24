@@ -44,15 +44,4 @@ class UserTest < ActiveSupport::TestCase
     @user = User.new(valid_user.merge(password: ""))
     assert_not @user.valid?
   end
-
-  test "password must be at least 6 characters long" do
-    @user = User.new(valid_user.merge(password: "short"))
-    assert_not @user.valid?
-  end
-
-  test "password cannot be longer than ActiveRecord Max" do
-    max_length = ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
-    @user = User.new(valid_user.merge(password: "a" * (max_length + 1)))
-    assert_not @user.valid?
-  end
 end

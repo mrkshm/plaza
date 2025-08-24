@@ -1,0 +1,10 @@
+en:
+  sessions:
+    new:
+      title: Log In
+      login: Login
+    create:
+      success: You are logged in!
+      incorrect_details: The email or password are incorrect, please try again.
+    destroy:
+      success: You've logged out successfully!

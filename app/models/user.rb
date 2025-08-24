@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include Authentication
   has_many :memberships, dependent: :destroy
   has_many :organizations, through: :memberships
 
@@ -7,11 +8,10 @@ class User < ApplicationRecord
     format: { with: URI::MailTo::EMAIL_REGEXP },
     uniqueness: { case_sensitive: false }
 
-  validates :password, presence: true,
-    length: { minimum: 6 }
-
   normalizes :name, with: ->(name) { name.strip }
   normalizes :email, with: ->(email) { email.strip.downcase }
-
-  has_secure_password
+  def self.create_app_session(email:, password:)
+    user = User.authenticate_by(email: email, password: password)
+    user.app_sessions.create if user.present?
+  end
 end
